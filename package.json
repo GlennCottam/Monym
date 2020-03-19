@@ -1,0 +1,33 @@
+{
+  "name": "monym",
+  "version": "0.0.1",
+  "description": "Monitor Your Media is a webapp that is designed to integrate specific aspects of Sonarr, Radarr, and Lidarr to the users who use them. Monym is designed to give limited access to end users.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "nodemon --watch public --watch views --watch index.js index.js",
+    "scss": "node-sass sass/ -o public/"
+  },
+  "keywords": [
+    "Sonarr",
+    "Radarr",
+    "Lidarr",
+    "Monitor",
+    "End-User",
+    "Request",
+    "API"
+  ],
+  "author": "GlennCottam",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.7.9",
+    "cors": "^2.8.5",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "nodejs": "0.0.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
