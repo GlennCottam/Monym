@@ -1,0 +1,12 @@
+{
+    "sonarr": {
+        "url": "",
+        "port": 8989,
+        "api_key": ""
+    },
+    "radarr": {
+        "url": "",
+        "port": 7878,
+        "api_key": ""
+    }
+}

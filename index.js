@@ -5,7 +5,12 @@ console.log("Importing: Cors");
 const cors = require('cors');
 console.log("Importing: Request");
 const request = require('request');
+console.log("Importing: fs");
+const fs = require('fs');
 const port = 6969;
+
+const config = JSON.parse(fs.readFileSync('config/config.json'));
+console.log("Config File loaded: \n" + JSON.stringify(config));
 
 app.use(cors());
 app.set('view engine', 'ejs');
@@ -21,13 +26,6 @@ app.get('/', async function(req, res)
     console.log("GET Request for '/'");
 });
 
-
-// API
-app.get('/api', function(req, res)
-{
-
-});
-
 console.log("Starting WebServer");
 
 app.listen(port, function()
@@ -37,9 +35,7 @@ app.listen(port, function()
 
 async function sonarr(endpoint)
 {
-    var sonarrURL = "http://unraid.mackwnox.ca:8989/api";
-    var apiKey = "0e03e7edf2264fc8b942716ca675ca07";
-    var url = sonarrURL + endpoint + "?apikey=" + apiKey;
+    var url = config.sonarr.url + ":" + config.sonarr.port + "/api" + endpoint + "?apikey=" + config.sonarr.api_key;
 
     return new Promise(async resolve =>
     {

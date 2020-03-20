@@ -16,8 +16,10 @@
             <h1><i class="fas fa-desktop text-primary mr-2"></i>Monym</h1>
         </header>
         <div class="container-sm bg-light text-dark rounded p-2">
-            <h1>Sonarr Status</h1>
-            <p>Version: <%= info.version%></p>
+            <h1 class="text-center">Sonarr information</h1>
+            <h2>Sonarr Status</h2>
+            <p class="bg-info text-dark container-fluid rounded p-2">Version: <%= info.version%> &nbsp; </p>
+            <p class="bg-info text-dark container-fluid rounded p-2">Operating System: <%= info.osName + " " + info.osVersion%></p>
             <h2>Sonarr Queue</h2>
             <table class="table table-hover table-dark table-bordered">
                 <thead class="bg-primary">
@@ -30,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(var i=0; i < queue.length; i++) { %>
+                    <% for(var i=0; i < 5; i++) { %>
                     <tr>
                         <td><%= queue[i].series.title %></td>
                         <td><%= queue[i].episode.title %></td>
@@ -38,7 +40,7 @@
                         <td><%= queue[i].quality.quality.name %></td>
                         <td><%= queue[i].sizeleft %></td>
                     </tr>
-                <% } %>
+                    <% } %>
                 </tbody>
             </table>
         </div>
