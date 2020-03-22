@@ -43,6 +43,7 @@ jspm_packages/
 
 # VSCode Workspaces
 workspaces/
+.vscode
 
 # TypeScript v1 declaration files
 typings/
@@ -105,3 +106,5 @@ dist
 
 # TernJS port file
 .tern-port
+
+

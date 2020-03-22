@@ -36,24 +36,30 @@
         </header>
         <div class="container-md bg-light text-dark rounded p-2">
             <!-- <h1 class="text-center">Sonarr</h1> -->
-            <img class="mx-auto" src="images/sonarr_logo.png">
-            <h2>Sonarr Status</h2>
-            <p class="bg-info text-dark container-fluid rounded p-2">Version: <%= info.version%> &nbsp; </p>
-            <p class="bg-info text-dark container-fluid rounded p-2">Operating System: <%= info.osName + " " + info.osVersion%></p>
-            <h2>Sonarr Series Status</h2>
+            <div class="row">
+                <div class="col-md-auto">
+                    <div class="w-100">
+                        <img class="mx-auto" height="100px" src="images/sonarr_logo.png">
+                    </div>
+                </div>
+                <div class="col-md">
+                    <p class="bg-secondary text-dark container-fluid rounded p-2">Version: <%= info.version%> &nbsp; </p>
+                    <p class="bg-secondary text-dark container-fluid rounded p-2">Operating System: <%= info.osName + " " + info.osVersion%></p>
+                </div>
+            </div>
             <div>
-                <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Series List</a>
+                <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Toggle Table</a>
                 <div class="collapse show" id="collapseExample">
                     <table id="sonarr_series_table" class="table table-hover table-dark table-bordered table-responsive-md table-sm">
-                        <thead class="bg-primary">
+                        <thead class="bg-primary text-center">
                             <tr>
-                                <th>Show</th>
-                                <th>Status</th>
-                                <th>Network</th>
-                                <th>Episodes Available</th>  
+                                <th><h4>Show</h4></th>
+                                <th><h4>Status</h4></th>
+                                <th><h4>Network</h4></th>
+                                <th><h4>Episodes Available</h4></th>  
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-center">
                             <% for(var i=0; i < series.length; i++) { %>
                             <tr>
                                 <td class="align-middle"><%= series[i].title %></td>
