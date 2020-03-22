@@ -6,6 +6,10 @@
         <!-- jQuery -->
         <script src="jquery.min.js"></script>
 
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="fontawesome/css/all.css">
+        <script src="fontawesome/js/all.js"></script>
+
         <!-- DataTables -->
         <script src="datatables.min.js"></script>
         <link rel="stylesheet" href="datatables.min.css">
@@ -16,23 +20,22 @@
         <!-- Static JS -->
         <script src="bootstrap.min.js"></script>
 
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="fontawesome/css/all.css">
-        <script src="fontawesome/js/all.js"></script>
-
         <!-- DataTables Scripting -->
         <script>
             $(document).ready(function()
             {
-                $("#sonarr_series_table").DataTable();
+                $("#sonarr_series_table").DataTable({
+                    // "pageLength": 999
+                    paging: false,
+                    scrollY: 500,
+                    ordering: true
+                });
             });
         </script>
-
-
     </head>
     <body class="bg-dark text-light">
         <header class="container-md">
-            <h1><i class="fas fa-desktop text-primary mr-2"></i>Monym</h1>
+            <h1 class="text-center"><i class="fas fa-desktop text-primary mr-2"></i>Monym</h1>
         </header>
         <div class="container-md bg-light text-dark rounded p-2">
             <!-- <h1 class="text-center">Sonarr</h1> -->
@@ -50,22 +53,27 @@
             <div>
                 <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Toggle Table</a>
                 <div class="collapse show" id="collapseExample">
-                    <table id="sonarr_series_table" class="table table-hover table-dark table-bordered table-responsive-md table-sm">
+                    <table id="sonarr_series_table" class="table table-hover table-dark table-bordered table-responsive">
                         <thead class="bg-primary text-center">
                             <tr>
-                                <th><h4>Show</h4></th>
-                                <th><h4>Status</h4></th>
-                                <th><h4>Network</h4></th>
-                                <th><h4>Episodes Available</h4></th>  
+                                <th>Show</th>
+                                <th>Status</th>
+                                <th>Network</th>
+                                <th>On Plex</th>  
                             </tr>
                         </thead>
-                        <tbody class="text-center">
+                        <tbody class="">
                             <% for(var i=0; i < series.length; i++) { %>
                             <tr>
-                                <td class="align-middle"><%= series[i].title %></td>
+                                <!-- <td data-order="<%= series[i].title %>" style="background-size: cover; background-image: url('<%= config.sonarr.url + ':' + config.sonarr.port + series[i].images[1].url %>');" class="align-middle"></td> -->
+                                
+                                <td class="w-50" data-search="<%= series[i].title %>" data-order="<%= series[i].title %>">
+                                    <img class="img-fluid w-100" src="<%= config.sonarr.url + ':' + config.sonarr.port + series[i].images[1].url %>">
+                                </td>
+                                
                                 <td class="align-middle"><%= series[i].status %></td>
                                 <td class="align-middle"><%= series[i].network %></td>
-                                <td class="align-middle" data-order="<%= (series[i].episodeFileCount / series[i].episodeCount)*100 %>%">
+                                <td class="w-50 align-middle" data-order="<%= (series[i].episodeFileCount / series[i].episodeCount)*100 %>%">
                                     <div class="text-center"><%= series[i].episodeFileCount %> / <%= series[i].episodeCount %></div>
                                     
                                     <div class="progress">

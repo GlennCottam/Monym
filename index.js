@@ -16,27 +16,39 @@ app.use(cors());
 app.set('view engine', 'ejs');
 app.use(Express.static('public'));
 
+var sonarr_info = {};
+var sonarr_series = {};
+
+setInterval(async function()
+{
+    console.log("Pulling Data");
+    await pullData();
+    console.log("Data Successfully Pulled")
+}, 100000);
+
+
+async function pullData()
+{
+    console.log("Grabbing Info From Sonarr");
+    sonarr_info = await sonarr("/system/status");
+    
+    console.log("Grabbing Series From Sonarr");
+    sonarr_series = await sonarr("/series");
+}
+
+
 // WebServer
 app.get('/', async function(req, res)
 {
-    console.log("Grabbing Info From Sonarr");
-    var info = await sonarr("/system/status");
-
-    console.log("Grabbing Download Queue From Sonarr");
-    var queue = await sonarr("/queue");
-    
-    console.log("Grabbing Series From Sonarr");
-    var series = await sonarr("/series");
-
-    var message = "hello world";
-    res.render('index', {message: message, info: info, queue: queue, series});
+    res.render('index', {config, info: sonarr_info, series: sonarr_series});
     console.log("GET Request for '/'");
 });
 
 console.log("Starting WebServer");
 
-app.listen(port, function()
+app.listen(port, async function()
 {
+    await pullData();
     console.log("Server Ready");
 });
 
