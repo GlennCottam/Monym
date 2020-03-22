@@ -27,14 +27,12 @@
                 $("#sonarr_series_table").DataTable({
                     // "pageLength": 999
                     paging: false,
-                    scrollY: 600,
                     ordering: true
                 });
 
                 $("#radarr_movies_table").DataTable({
                     // "pageLength": 999
                     paging: false,
-                    scrollY: 600,
                     ordering: true
                 });
             });
@@ -59,7 +57,7 @@
             </div>
             <div>
                 <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseSonarr" role="button" aria-expanded="false" aria-controls="collapseSonarr">Toggle Table</a>
-                <div class="collapse show" id="collapseSonarr">
+                <div class="collapse" id="collapseSonarr">
                     <table id="sonarr_series_table" class="table table-hover table-dark table-bordered table-responsive">
                         <thead class="bg-primary text-center">
                             <tr>
@@ -72,8 +70,8 @@
                         <tbody class="text-center">
                             <% for(var i=0; i < sonarr_series.length; i++) { %>
                             <tr class="">                                
-                                <td class="w-50" data-search="<%= sonarr_series[i].title %>" data-order="<%= sonarr_series[i].title %>">
-                                    <img class="img-fluid w-100" src="<%= config.sonarr.url + ':' + config.sonarr.port + sonarr_series[i].images[1].url %>">
+                                <td class="w-50 align-middle" data-search="<%= sonarr_series[i].title %>" data-order="<%= sonarr_series[i].title %>">
+                                    <%= sonarr_series[i].title %>
                                 </td>
 
                                 <% if(sonarr_series[i].status == "ended") { %>
@@ -118,31 +116,29 @@
             </div>
             <div>
                 <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseRadarr" role="button" aria-expanded="false" aria-controls="collapseRadarr">Toggle Table</a>
-                <div class="collapse show" id="collapseRadarr">
+                <div class="collapse" id="collapseRadarr">
                     <table id="radarr_movies_table" class="table table-hover table-dark table-bordered table-responsive">
                         <thead class="bg-primary text-center">
                             <tr>
                                 <th>Movie</th>
                                 <th>Status</th>
                                 <th>Runtime</th>
-                                <th>Ratings</th>
+                                <th>Rating</th>
                                 <th>On Plex</th>  
                             </tr>
                         </thead>
                         <tbody class="text-center">
                             <% for(var i = 0; i < radarr_movies.length; i++) { %>
+                            
                             <tr>
                                 <td class="w-25" data-search="<%= radarr_movies[i].title %>" data-order="<%= radarr_movies[i].title %>">
-                                    <% if(radarr_movies[i].images[0]) {%>
-                                        <div>
-                                            <img class="img-fluid w-100" src="<%= config.radarr.url + ':' + config.radarr.port + radarr_movies[i].images[0].url %>">
-                                        </div>
-                                    <%}%>
+
+                                    
                                         <%= radarr_movies[i].title %>
                                 </td>
                                 <td><%= radarr_movies[i].status %></td>
                                 <td><%= radarr_movies[i].runtime %></td>
-                                <td>Votes: <%= radarr_movies[i].ratings.votes %><br>Value: <%= radarr_movies[i].ratings.value %></td>
+                                <td><%= radarr_movies[i].ratings.value %>/10</td>
 
                                 <% if(radarr_movies[i].hasFile){ %>
                                     <td data-order="true"><i class="fas fa-check-square text-success"></i></td>
