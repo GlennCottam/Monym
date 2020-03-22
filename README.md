@@ -13,15 +13,24 @@ In order to install, clone the git repo, and install dependencies with:
 ```bash
 npm i
 ```
+## Docker Installation
+To install the docker, run the following commands
+```bash
+docker build -t GlennCottam/monym .
+docker run --name monym -p 6969:6969 -d GlennCottam/monym
+```
+
+
 Other than Nodejs, and NPM, no other dependices will be needed.
 
 # Progress Report
 - [x] Sonarr TV Series List
-- [ ] Radarr Movie List
+- [x] Radarr Movie List
 - [ ] Lidarr Album List
 - [x] DataTables
 - [ ] Logo Creation
-- [ ] Docker Implementation
+- [X] Docker Implementation
+  - [ ] Docker Hub
 - [x] Configuration
 - [ ] Download Status
 - [x] Better Optimization

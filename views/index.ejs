@@ -25,13 +25,11 @@
             $(document).ready(function()
             {
                 $("#sonarr_series_table").DataTable({
-                    // "pageLength": 999
                     paging: false,
                     ordering: true
                 });
 
                 $("#radarr_movies_table").DataTable({
-                    // "pageLength": 999
                     paging: false,
                     ordering: true
                 });
@@ -43,7 +41,6 @@
             <h1 class="text-center"><i class="fas fa-desktop text-primary mr-2"></i>Monym</h1>
         </header>
         <div class="container-md bg-light text-dark rounded p-2">
-            <!-- <h1 class="text-center">Sonarr</h1> -->
             <div class="row">
                 <div class="col-md-auto">
                     <div class="w-100">
@@ -132,9 +129,7 @@
                             
                             <tr>
                                 <td class="w-25" data-search="<%= radarr_movies[i].title %>" data-order="<%= radarr_movies[i].title %>">
-
-                                    
-                                        <%= radarr_movies[i].title %>
+                                    <%= radarr_movies[i].title %>
                                 </td>
                                 <td><%= radarr_movies[i].status %></td>
                                 <td><%= radarr_movies[i].runtime %></td>

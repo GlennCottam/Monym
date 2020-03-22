@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/index.js",
     "test": "nodemon --watch public/ --watch src/ src/index.js",
-    "scss": "node-sass sass/ -o public/"
+    "scss": "node-sass sass/ -o public/",
+    "docker-build": "docker build -t glenn/monym"
   },
   "keywords": [
     "Sonarr",
