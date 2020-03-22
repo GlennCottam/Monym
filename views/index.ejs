@@ -27,7 +27,14 @@
                 $("#sonarr_series_table").DataTable({
                     // "pageLength": 999
                     paging: false,
-                    scrollY: 500,
+                    scrollY: 600,
+                    ordering: true
+                });
+
+                $("#radarr_movies_table").DataTable({
+                    // "pageLength": 999
+                    paging: false,
+                    scrollY: 600,
                     ordering: true
                 });
             });
@@ -46,13 +53,13 @@
                     </div>
                 </div>
                 <div class="col-md">
-                    <p class="bg-secondary text-dark container-fluid rounded p-2">Version: <%= info.version%> &nbsp; </p>
-                    <p class="bg-secondary text-dark container-fluid rounded p-2">Operating System: <%= info.osName + " " + info.osVersion%></p>
+                    <p class="bg-secondary text-dark container-fluid rounded p-2">Version: <%= sonarr_info.version%> &nbsp; </p>
+                    <p class="bg-secondary text-dark container-fluid rounded p-2">Operating System: <%= sonarr_info.osName + " " + sonarr_series.osVersion%></p>
                 </div>
             </div>
             <div>
-                <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Toggle Table</a>
-                <div class="collapse show" id="collapseExample">
+                <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseSonarr" role="button" aria-expanded="false" aria-controls="collapseSonarr">Toggle Table</a>
+                <div class="collapse show" id="collapseSonarr">
                     <table id="sonarr_series_table" class="table table-hover table-dark table-bordered table-responsive">
                         <thead class="bg-primary text-center">
                             <tr>
@@ -62,27 +69,30 @@
                                 <th>On Plex</th>  
                             </tr>
                         </thead>
-                        <tbody class="">
-                            <% for(var i=0; i < series.length; i++) { %>
-                            <tr>
-                                <!-- <td data-order="<%= series[i].title %>" style="background-size: cover; background-image: url('<%= config.sonarr.url + ':' + config.sonarr.port + series[i].images[1].url %>');" class="align-middle"></td> -->
-                                
-                                <td class="w-50" data-search="<%= series[i].title %>" data-order="<%= series[i].title %>">
-                                    <img class="img-fluid w-100" src="<%= config.sonarr.url + ':' + config.sonarr.port + series[i].images[1].url %>">
+                        <tbody class="text-center">
+                            <% for(var i=0; i < sonarr_series.length; i++) { %>
+                            <tr class="">                                
+                                <td class="w-50" data-search="<%= sonarr_series[i].title %>" data-order="<%= sonarr_series[i].title %>">
+                                    <img class="img-fluid w-100" src="<%= config.sonarr.url + ':' + config.sonarr.port + sonarr_series[i].images[1].url %>">
                                 </td>
-                                
-                                <td class="align-middle"><%= series[i].status %></td>
-                                <td class="align-middle"><%= series[i].network %></td>
-                                <td class="w-50 align-middle" data-order="<%= (series[i].episodeFileCount / series[i].episodeCount)*100 %>%">
-                                    <div class="text-center"><%= series[i].episodeFileCount %> / <%= series[i].episodeCount %></div>
+
+                                <% if(sonarr_series[i].status == "ended") { %>
+                                    <td class="align-middle bg-danger"><%= sonarr_series[i].status %></td>
+                                <% } else{%>
+                                    <td class="align-middle bg-info"><%= sonarr_series[i].status %></td>
+                                <% } %>
+
+                                <td class="align-middle"><%= sonarr_series[i].network %></td>
+                                <td class="w-50 align-middle" data-order="<%= (sonarr_series[i].episodeFileCount / sonarr_series[i].episodeCount)*100 %>%">
+                                    <div class="text-center"><%= sonarr_series[i].episodeFileCount %> / <%= sonarr_series[i].episodeCount %></div>
                                     
                                     <div class="progress">
                                         
-                                        <% if(series[i].episodeFileCount / series[i].episodeCount == 1) { %>
-                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: <%=series[i].episodeFileCount / series[i].episodeCount * 100%>%;" aria-valuenow="<%= series[i].episodeFileCount %>" aria-valuemin="0" aria-valuemax="<%= series[i].episodeCount %>"></div>
+                                        <% if(sonarr_series[i].episodeFileCount / sonarr_series[i].episodeCount == 1) { %>
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: <%=sonarr_series[i].episodeFileCount / sonarr_series[i].episodeCount * 100%>%;" aria-valuenow="<%= sonarr_series[i].episodeFileCount %>" aria-valuemin="0" aria-valuemax="<%= sonarr_series[i].episodeCount %>"></div>
                                             
                                         <%} else {%>
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary text-dark" role="progressbar" style="width: <%=series[i].episodeFileCount / series[i].episodeCount * 100%>%;" aria-valuenow="<%= series[i].episodeFileCount %>" aria-valuemin="0" aria-valuemax="<%= series[i].episodeCount %>"></div>
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary text-dark" role="progressbar" style="width: <%=sonarr_series[i].episodeFileCount / sonarr_series[i].episodeCount * 100%>%;" aria-valuenow="<%= sonarr_series[i].episodeFileCount %>" aria-valuemin="0" aria-valuemax="<%= sonarr_series[i].episodeCount %>"></div>
                                         <%}%>
                                         
                                     </div>
@@ -94,8 +104,58 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="container-md bg-light text-dark rounded p-2 mt-2">
-            <h1 class="text-center">Radarr Information</h1>
-        </div> -->
+        <div class="container-md bg-light text-dark rounded p-2 mt-2">
+            <div class="row">
+                <div class="col-md-auto">
+                    <div class="w-100">
+                        <h1><img class="mx-auto" height="100px" src="images/radarr_logo.png">Radarr</h1>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <p class="bg-secondary text-dark container-fluid rounded p-2">Version: <%= radarr_info.version%> &nbsp; </p>
+                    <p class="bg-secondary text-dark container-fluid rounded p-2">Operating System: <%= radarr_info.osName + " " + radarr_info.osVersion%></p>
+                </div>
+            </div>
+            <div>
+                <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseRadarr" role="button" aria-expanded="false" aria-controls="collapseRadarr">Toggle Table</a>
+                <div class="collapse show" id="collapseRadarr">
+                    <table id="radarr_movies_table" class="table table-hover table-dark table-bordered table-responsive">
+                        <thead class="bg-primary text-center">
+                            <tr>
+                                <th>Movie</th>
+                                <th>Status</th>
+                                <th>Runtime</th>
+                                <th>Ratings</th>
+                                <th>On Plex</th>  
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <% for(var i = 0; i < radarr_movies.length; i++) { %>
+                            <tr>
+                                <td class="w-25" data-search="<%= radarr_movies[i].title %>" data-order="<%= radarr_movies[i].title %>">
+                                    <% if(radarr_movies[i].images[0]) {%>
+                                        <div>
+                                            <img class="img-fluid w-100" src="<%= config.radarr.url + ':' + config.radarr.port + radarr_movies[i].images[0].url %>">
+                                        </div>
+                                    <%}%>
+                                        <%= radarr_movies[i].title %>
+                                </td>
+                                <td><%= radarr_movies[i].status %></td>
+                                <td><%= radarr_movies[i].runtime %></td>
+                                <td>Votes: <%= radarr_movies[i].ratings.votes %><br>Value: <%= radarr_movies[i].ratings.value %></td>
+
+                                <% if(radarr_movies[i].hasFile){ %>
+                                    <td data-order="true"><i class="fas fa-check-square text-success"></i></td>
+                                <%}else{%>
+                                    <td data-order="false"><i class="fas fa-minus-square text-danger"></i></td>
+                                <%}%>
+                            </tr>
+                            <%}%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
     </body>
 </html>
