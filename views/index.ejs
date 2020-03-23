@@ -38,7 +38,7 @@
     </head>
     <body class="bg-dark text-light">
         <header class="container-md">
-            <h1 class="text-center"><i class="fas fa-desktop text-primary mr-2"></i>Monym</h1>
+            <h1 class="text-center p-2 pt-3"><i class="fas fa-desktop text-primary mr-2"></i>Monym</h1>
         </header>
         <!-- 
             Sonarr Series Section
@@ -52,13 +52,13 @@
                 </div>
                 <div class="col-md">
                     <p class="bg-secondary text-dark container-fluid rounded p-2">Version: <%= sonarr_info.version%> &nbsp; </p>
-                    <p class="bg-secondary text-dark container-fluid rounded p-2">Operating System: <%= sonarr_info.osName + " " + sonarr_series.osVersion%></p>
+                    <p class="bg-secondary text-dark container-fluid rounded p-2">Operating System: <%= sonarr_info.osName + " " + sonarr_info.osVersion%></p>
                 </div>
             </div>
             <div>
                 <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseSonarr" role="button" aria-expanded="false" aria-controls="collapseSonarr">Toggle Table</a>
                 <div class="collapse" id="collapseSonarr">
-                    <table id="sonarr_series_table" class="table table-hover table-dark table-bordered table-responsive-sm">
+                    <table id="sonarr_series_table" class="table table-hover table-dark table-bordered table-striped table-responsive-sm table-sm">
                         <thead class="bg-primary text-center">
                             <tr>
                                 <th>Show</th>
@@ -69,18 +69,22 @@
                         </thead>
                         <tbody class="text-center">
                             <% for(var i=0; i < sonarr_series.length; i++) { %>
-                            <tr class="">                                
+                            <tr>
+                                <!-- Show Name -->
                                 <td class="align-middle" data-search="<%= sonarr_series[i].title %>" data-order="<%= sonarr_series[i].title %>">
                                     <%= sonarr_series[i].title %>
                                 </td>
 
+                                <!-- Show Status -->
                                 <% if(sonarr_series[i].status == "ended") { %>
                                     <td class="align-middle"><%= sonarr_series[i].status %><i class="fas fa-stop text-danger ml-2"></i></td>
                                 <% } else{%>
                                     <td class="align-middle"><%= sonarr_series[i].status %><i class="fas fa-play text-success ml-2"></i></td>
                                 <% } %>
-
+                                <!-- Show Network -->
                                 <td class="align-middle"><%= sonarr_series[i].network %></td>
+
+                                <!-- Show Progress -->
                                 <td class="w-25 align-middle" data-order="<%= (sonarr_series[i].episodeFileCount / sonarr_series[i].episodeCount)*100 %>%">
                                     <div class="text-center"><%= sonarr_series[i].episodeFileCount %> / <%= sonarr_series[i].episodeCount %></div>
                                     
@@ -120,13 +124,13 @@
             <div>
                 <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseRadarr" role="button" aria-expanded="false" aria-controls="collapseRadarr">Toggle Table</a>
                 <div class="collapse" id="collapseRadarr">
-                    <table id="radarr_movies_table" class="table table-hover table-dark table-bordered table-responsive-sm">
+                    <table id="radarr_movies_table" class="table table-hover table-dark table-bordered table-striped table-responsive-sm table-sm">
                         <thead class="bg-primary text-center">
                             <tr>
                                 <th>Movie</th>
-                                <th>Status</th>
                                 <th>Runtime</th>
                                 <th>Rating</th>
+                                <th>Status</th>
                                 <th>On Plex</th>  
                             </tr>
                         </thead>
@@ -134,27 +138,31 @@
                             <% for(var i = 0; i < radarr_movies.length; i++) { %>
                             
                             <tr>
-                                <td class="w-25" data-search="<%= radarr_movies[i].title %>" data-order="<%= radarr_movies[i].title %>">
+                                <td>
                                     <%= radarr_movies[i].title %> (<%= radarr_movies[i].year%>)
                                 </td>
-                                
-                                <% if(radarr_movies[i].status == "released") {%>
-                                    <td><i class="fas fa-check-circle text-primary mr-2"></i><%= radarr_movies[i].status %></td>
-                                <% } else if(radarr_movies[i].status == "announced") { %>
-                                    <td><i class="fas fa-bullhorn text-primary mr-2"></i><%= radarr_movies[i].status %></td>
-                                <% } else if (radarr_movies[i].status == "inCinemas") { %>
-                                    <td><i class="fas fa-film bg-primary mr-2 "></i><%= radarr_movies[i].status %></td>
-                                <% } else { %>
-                                    <td><%= radarr_movies[i].status %></td>
-                                <% } %>   
 
                                 <td><%= radarr_movies[i].runtime %></td>
                                 <td><%= radarr_movies[i].ratings.value %>/10</td>
 
+                                <td>
+                                    <% if(radarr_movies[i].status == "released") {%>
+                                        <i class="fas fa-check-circle text-success mr-2"></i><%= radarr_movies[i].status %>
+                                    <% } else if(radarr_movies[i].status == "announced") { %>
+                                        <i class="fas fa-bullhorn text-primary mr-2"></i><%= radarr_movies[i].status %>
+                                    <% } else if (radarr_movies[i].status == "inCinemas") { %>
+                                        <i class="fas fa-film bg-secondary mr-2 "></i><%= radarr_movies[i].status %>
+                                    <% } else { %>
+                                        <%= radarr_movies[i].status %>
+                                    <% } %> 
+                                </td>
+
+                                 
+
                                 <% if(radarr_movies[i].hasFile){ %>
-                                    <td data-order="true"><i class="fas fa-check-square text-success"></i></td>
+                                    <td data-order="true"><i class="fas fa-check-circle text-success"></i></td>
                                 <%}else{%>
-                                    <td data-order="false"><i class="fas fa-minus-square text-danger"></i></td>
+                                    <td data-order="false"><i class="fas fa-minus-circle text-danger"></i></td>
                                 <%}%>
                             </tr>
                             <%}%>

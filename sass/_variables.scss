@@ -38,9 +38,9 @@ $blue:    #007bff !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
-$red:     #dc3545 !default;
+$red:     #ff0000 !default;
 $orange:  #fd7e14 !default;
-$yellow:  #ffc107 !default;
+$yellow:  #ffff00 !default;
 $gold:    #ffaa00 !default;
 $green:   #28a745 !default;
 $teal:    #20c997 !default;
@@ -67,7 +67,7 @@ $colors: map-merge(
   $colors
 );
 
-$primary:       $purple !default;
+$primary:       $indigo !default;
 $secondary:     $gold !default;
 $success:       $green !default;
 $info:          $cyan !default;
@@ -116,15 +116,15 @@ $escaped-characters: (
 
 $enable-caret:                                true !default;
 $enable-rounded:                              true !default;
-$enable-shadows:                              false !default;
+$enable-shadows:                              true !default;
 $enable-gradients:                            false !default;
 $enable-transitions:                          true !default;
-$enable-prefers-reduced-motion-media-query:   true !default;
+$enable-prefers-reduced-motion-media-query:   false !default;
 $enable-hover-media-query:                    false !default; // Deprecated, no longer affects any compiled CSS
 $enable-grid-classes:                         true !default;
 $enable-pointer-cursor-for-buttons:           true !default;
 $enable-print-styles:                         true !default;
-$enable-responsive-font-sizes:                false !default;
+$enable-responsive-font-sizes:                true !default;
 $enable-validation-icons:                     true !default;
 $enable-deprecation-messages:                 true !default;
 

@@ -1,4 +1,7 @@
 {
+    "client": {
+        "port": 6969
+    },
     "sonarr": {
         "url": "",
         "port": 8989,
