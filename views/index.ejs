@@ -40,6 +40,9 @@
         <header class="container-md">
             <h1 class="text-center"><i class="fas fa-desktop text-primary mr-2"></i>Monym</h1>
         </header>
+        <!-- 
+            Sonarr Series Section
+         -->
         <div class="container-md bg-light text-dark rounded p-2">
             <div class="row">
                 <div class="col-md-auto">
@@ -55,7 +58,7 @@
             <div>
                 <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseSonarr" role="button" aria-expanded="false" aria-controls="collapseSonarr">Toggle Table</a>
                 <div class="collapse" id="collapseSonarr">
-                    <table id="sonarr_series_table" class="table table-hover table-dark table-bordered table-responsive">
+                    <table id="sonarr_series_table" class="table table-hover table-dark table-bordered table-responsive-sm">
                         <thead class="bg-primary text-center">
                             <tr>
                                 <th>Show</th>
@@ -67,18 +70,18 @@
                         <tbody class="text-center">
                             <% for(var i=0; i < sonarr_series.length; i++) { %>
                             <tr class="">                                
-                                <td class="w-50 align-middle" data-search="<%= sonarr_series[i].title %>" data-order="<%= sonarr_series[i].title %>">
+                                <td class="align-middle" data-search="<%= sonarr_series[i].title %>" data-order="<%= sonarr_series[i].title %>">
                                     <%= sonarr_series[i].title %>
                                 </td>
 
                                 <% if(sonarr_series[i].status == "ended") { %>
-                                    <td class="align-middle bg-danger"><%= sonarr_series[i].status %></td>
+                                    <td class="align-middle"><%= sonarr_series[i].status %><i class="fas fa-stop text-danger ml-2"></i></td>
                                 <% } else{%>
-                                    <td class="align-middle bg-info"><%= sonarr_series[i].status %></td>
+                                    <td class="align-middle"><%= sonarr_series[i].status %><i class="fas fa-play text-success ml-2"></i></td>
                                 <% } %>
 
                                 <td class="align-middle"><%= sonarr_series[i].network %></td>
-                                <td class="w-50 align-middle" data-order="<%= (sonarr_series[i].episodeFileCount / sonarr_series[i].episodeCount)*100 %>%">
+                                <td class="w-25 align-middle" data-order="<%= (sonarr_series[i].episodeFileCount / sonarr_series[i].episodeCount)*100 %>%">
                                     <div class="text-center"><%= sonarr_series[i].episodeFileCount %> / <%= sonarr_series[i].episodeCount %></div>
                                     
                                     <div class="progress">
@@ -99,6 +102,9 @@
                 </div>
             </div>
         </div>
+        <!-- 
+            Radarr Movies Section
+        -->
         <div class="container-md bg-light text-dark rounded p-2 mt-2">
             <div class="row">
                 <div class="col-md-auto">
@@ -114,7 +120,7 @@
             <div>
                 <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseRadarr" role="button" aria-expanded="false" aria-controls="collapseRadarr">Toggle Table</a>
                 <div class="collapse" id="collapseRadarr">
-                    <table id="radarr_movies_table" class="table table-hover table-dark table-bordered table-responsive">
+                    <table id="radarr_movies_table" class="table table-hover table-dark table-bordered table-responsive-sm">
                         <thead class="bg-primary text-center">
                             <tr>
                                 <th>Movie</th>
@@ -129,9 +135,19 @@
                             
                             <tr>
                                 <td class="w-25" data-search="<%= radarr_movies[i].title %>" data-order="<%= radarr_movies[i].title %>">
-                                    <%= radarr_movies[i].title %>
+                                    <%= radarr_movies[i].title %> (<%= radarr_movies[i].year%>)
                                 </td>
-                                <td><%= radarr_movies[i].status %></td>
+                                
+                                <% if(radarr_movies[i].status == "released") {%>
+                                    <td><i class="fas fa-check-circle text-primary mr-2"></i><%= radarr_movies[i].status %></td>
+                                <% } else if(radarr_movies[i].status == "announced") { %>
+                                    <td><i class="fas fa-bullhorn text-primary mr-2"></i><%= radarr_movies[i].status %></td>
+                                <% } else if (radarr_movies[i].status == "inCinemas") { %>
+                                    <td><i class="fas fa-film bg-primary mr-2 "></i><%= radarr_movies[i].status %></td>
+                                <% } else { %>
+                                    <td><%= radarr_movies[i].status %></td>
+                                <% } %>   
+
                                 <td><%= radarr_movies[i].runtime %></td>
                                 <td><%= radarr_movies[i].ratings.value %>/10</td>
 

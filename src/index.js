@@ -43,7 +43,6 @@ var endpoints =
     }
 }
 
-
 // Automated gathering of data. Performes every few seconds to prevent overloading of system.
 setInterval(async function()
 {
@@ -111,6 +110,5 @@ async function radarr(endpoint)
         });
     });
 }
-
 
 module.exports.config = config;

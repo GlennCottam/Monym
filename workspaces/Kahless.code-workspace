@@ -7,6 +7,7 @@
 	"settings": {
 		"git.enabled": false,
 		"terminal.integrated.shell.windows": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
-		"files.autoSave": "afterDelay"
+		"files.autoSave": "off",
+		"terminal.integrated.fontFamily": "hack"
 	}
 }

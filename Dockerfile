@@ -16,8 +16,13 @@ RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
 # Bundle app source
+
 COPY . /monym/
 
+VOLUME /monym/config
+
 EXPOSE 6969
+
+RUN cat config/config.json
 
 CMD [ "node", "src/index.js" ]
