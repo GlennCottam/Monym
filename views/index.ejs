@@ -58,7 +58,7 @@
             <div>
                 <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseSonarr" role="button" aria-expanded="false" aria-controls="collapseSonarr">Toggle Table</a>
                 <div class="collapse" id="collapseSonarr">
-                    <table id="sonarr_series_table" class="table table-hover table-dark table-bordered table-striped table-responsive-sm table-sm">
+                    <table id="sonarr_series_table" class="table table-hover table-dark table-striped table-responsive-sm table-sm">
                         <thead class="bg-primary text-center">
                             <tr>
                                 <th>Show</th>
@@ -67,26 +67,32 @@
                                 <th>On Plex</th>  
                             </tr>
                         </thead>
-                        <tbody class="text-center">
+                        <tbody>
                             <% for(var i=0; i < sonarr_series.length; i++) { %>
                             <tr>
                                 <!-- Show Name -->
-                                <td class="align-middle" data-search="<%= sonarr_series[i].title %>" data-order="<%= sonarr_series[i].title %>">
+                                <td class="align-middle text-center" data-search="<%= sonarr_series[i].title %>" data-order="<%= sonarr_series[i].title %>">
                                     <%= sonarr_series[i].title %>
                                 </td>
 
                                 <!-- Show Status -->
                                 <% if(sonarr_series[i].status == "ended") { %>
-                                    <td class="align-middle"><%= sonarr_series[i].status %><i class="fas fa-stop text-danger ml-2"></i></td>
+                                    <td class="align-middle"><i class="fas fa-stop text-danger mr-2"></i><%= sonarr_series[i].status %></td>
                                 <% } else{%>
-                                    <td class="align-middle"><%= sonarr_series[i].status %><i class="fas fa-play text-success ml-2"></i></td>
+                                    <td class="align-middle"><i class="fas fa-play text-success mr-2"></i><%= sonarr_series[i].status %></td>
                                 <% } %>
                                 <!-- Show Network -->
-                                <td class="align-middle"><%= sonarr_series[i].network %></td>
+                                <td class="align-middle text-center"><%= sonarr_series[i].network %></td>
 
-                                <!-- Show Progress -->
+                                <!-- 
+                                    Show Progress
+                                    Note:   This got very complex very quickly... 
+                                            Thanks to bootstrap and the way it handles status bars.
+                                -->
                                 <td class="w-25 align-middle" data-order="<%= (sonarr_series[i].episodeFileCount / sonarr_series[i].episodeCount)*100 %>%">
-                                    <div class="text-center"><%= sonarr_series[i].episodeFileCount %> / <%= sonarr_series[i].episodeCount %></div>
+                                    <div class="text-center">
+                                        <%= sonarr_series[i].episodeFileCount %> / <%= sonarr_series[i].episodeCount %>
+                                    </div>
                                     
                                     <div class="progress">
                                         
@@ -124,7 +130,7 @@
             <div>
                 <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseRadarr" role="button" aria-expanded="false" aria-controls="collapseRadarr">Toggle Table</a>
                 <div class="collapse" id="collapseRadarr">
-                    <table id="radarr_movies_table" class="table table-hover table-dark table-bordered table-striped table-responsive-sm table-sm">
+                    <table id="radarr_movies_table" class="table table-hover table-dark table-striped table-responsive-sm table-sm">
                         <thead class="bg-primary text-center">
                             <tr>
                                 <th>Movie</th>
@@ -138,14 +144,19 @@
                             <% for(var i = 0; i < radarr_movies.length; i++) { %>
                             
                             <tr>
+                                <!-- Movie Title and Year -->
                                 <td>
                                     <%= radarr_movies[i].title %> (<%= radarr_movies[i].year%>)
                                 </td>
 
+                                <!-- Movie Runtime -->
                                 <td><%= radarr_movies[i].runtime %></td>
+
+                                <!-- Movie Ratings -->
                                 <td><%= radarr_movies[i].ratings.value %>/10</td>
 
-                                <td>
+                                <!-- Movie Released Status -->
+                                <td class="w-25">
                                     <% if(radarr_movies[i].status == "released") {%>
                                         <i class="fas fa-check-circle text-success mr-2"></i><%= radarr_movies[i].status %>
                                     <% } else if(radarr_movies[i].status == "announced") { %>
@@ -158,7 +169,7 @@
                                 </td>
 
                                  
-
+                                <!-- Movie Found Status -->
                                 <% if(radarr_movies[i].hasFile){ %>
                                     <td data-order="true"><i class="fas fa-check-circle text-success"></i></td>
                                 <%}else{%>
